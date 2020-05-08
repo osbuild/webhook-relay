@@ -25,7 +25,7 @@ while True:
         # Set up our headers.
         headers = {}
         headers['Content-Type'] = "application/json"
-        headers['X-GitHub-Event'] = "push"
+        headers['X-Github-Event'] = original_headers['X-Github-Event']
 
         # Post the message to jenkins.
         resp = requests.post(
