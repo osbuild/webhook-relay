@@ -13,6 +13,8 @@ SQS_REGION = os.environ['SQS_REGION']
 sqs = boto3.resource('sqs', region_name=SQS_REGION)
 queue = sqs.get_queue_by_name(QueueName=SQS_QUEUE)
 
+print("Webhook consumer starting up!")
+
 while True:
     try:
         for message in queue.receive_messages():
@@ -35,7 +37,10 @@ while True:
             )
             print(resp.text)
 
+            # Delete the message if we made it this far.
+            message.delete()
+
     except Exception:
         pass
 
-    time.sleep(10)
+    time.sleep(15)
