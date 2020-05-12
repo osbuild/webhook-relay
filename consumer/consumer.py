@@ -16,7 +16,8 @@ queue = sqs.get_queue_by_name(QueueName=SQS_QUEUE)
 print("Webhook consumer starting up!")
 
 while True:
-    for message in queue.receive_messages():
+    for message in queue.receive_messages(
+            WaitTimeSeconds=20, MaxNumberOfMessages=10):
         print(f"Got message: {message.message_id}")
         parsed = json.loads(message.body)
         original_headers = parsed['headers']
@@ -39,4 +40,4 @@ while True:
         # Delete the message if we made it this far.
         message.delete()
 
-    time.sleep(15)
+    time.sleep(5)
