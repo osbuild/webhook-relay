@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import datetime
 import json
 import os
 import time
@@ -18,7 +19,7 @@ print("Webhook consumer starting up!")
 while True:
     for message in queue.receive_messages(
             WaitTimeSeconds=20, MaxNumberOfMessages=10):
-        print(f"Got message: {message.message_id}")
+        print(f"Got message: {message.message_id} at {datetime.datetime.now().isoformat()}")
         parsed = json.loads(message.body)
         original_headers = parsed['headers']
         payload = parsed['payload']
